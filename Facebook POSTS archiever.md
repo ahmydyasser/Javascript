@@ -1,5 +1,4 @@
-```js
-function processButtons() {
+```jsfunction processButtons() {
     // Get all buttons with the specified aria-label
     var buttons = document.querySelectorAll('div[aria-label="Actions for this post"]');
     
@@ -12,6 +11,8 @@ function processButtons() {
     function processButton(index) {
         if (index >= buttons.length) {
             console.info("INFO: All buttons processed.");
+            // Scroll down to load more content and re-run the script
+            scrollAndLoadMore();
             return;
         }
 
@@ -57,6 +58,19 @@ function processButtons() {
                 }, 2000); // Adjust delay as needed
             }, 2000); // Adjust this timeout if necessary
         }, 2000); // Adjust the delay to ensure button visibility
+    }
+
+    function scrollAndLoadMore() {
+        console.info("INFO: Scrolling down to load more content.");
+
+        // Scroll to the bottom of the page to trigger loading of new content
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+
+        // Wait for the new content to load and then re-run the button processing
+        setTimeout(function() {
+            console.info("INFO: Re-running button processing.");
+            processButtons();
+        }, 5000); // Adjust this timeout based on how long it takes to load new content
     }
 
     // Start processing from the first button
